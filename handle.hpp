@@ -78,15 +78,14 @@ struct TaggedHandle
 
 public:
     constexpr explicit TaggedHandle() noexcept
-        : m_Handle(GetHandleInvalidValue<Tag>())
+        : m_Handle(GetHandleInvalidValue())
     {}
 
     TaggedHandle(Type handle) noexcept
         : m_Handle(handle)
     {}
 
-private:
-    [[nodiscard]] constexpr HANDLE GetHandleInvalidValue() noexcept
+    [[nodiscard]] static constexpr HANDLE GetHandleInvalidValue() noexcept
     {
         if constexpr (HandleValueNull<_Tag>)
         {
@@ -123,7 +122,7 @@ struct HandleTraits<TaggedHandle<_Tag>>
     using Type   = Handle::Type;
     using Tag    = Handle::Tag;
 
-    inline static const Type InvalidHandleValue = Handle::GetHandleInvalidValue<Tag>();
+    inline static const Type InvalidHandleValue = Handle::GetHandleInvalidValue();
 
     static void Close(Type handle) noexcept 
     { 
@@ -140,14 +139,12 @@ CREATE_HANDLE_TRAITS(SOCKET,    NULL,    closesocket)
 CREATE_HANDLE_TRAITS(HKEY,      nullptr, RegCloseKey)
 CREATE_HANDLE_TRAITS(HWND,      nullptr, DestroyWindow)
 CREATE_HANDLE_TRAITS(HMENU,     nullptr, DestroyMenu)
-CREATE_HANDLE_TRAITS(HCURSOR,   nullptr, DestroyCursor)
 CREATE_HANDLE_TRAITS(HICON,     nullptr, DestroyIcon)
 CREATE_HANDLE_TRAITS(HDC,       nullptr, DeleteDC)
 CREATE_HANDLE_TRAITS(HBITMAP,   nullptr, DeleteObject)
 CREATE_HANDLE_TRAITS(HPEN,      nullptr, DeleteObject)
 CREATE_HANDLE_TRAITS(HBRUSH,    nullptr, DeleteObject)
 CREATE_HANDLE_TRAITS(HPALETTE,  nullptr, DeleteObject)
-CREATE_HANDLE_TRAITS(HMODULE,   nullptr, FreeLibrary)
 CREATE_HANDLE_TRAITS(HINSTANCE, nullptr, FreeLibrary)
 
 template<typename _Ty>
@@ -164,7 +161,7 @@ struct HandleBaseType<TaggedHandle<_Tag>>
 
 /*
  * @brief RAII Wrapper around Windows API handles
- * 
+ *
  * @tparam Handle type
  */
 template<typename _Ty>
