@@ -15,12 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="handle.hpp">
+    <ClInclude Include="src\handle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

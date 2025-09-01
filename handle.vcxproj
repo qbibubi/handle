@@ -133,10 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="handle.hpp" />
+    <ClInclude Include="src\handle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
